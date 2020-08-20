@@ -45,9 +45,10 @@
 
 <body>
   <section>
-   <h1 id = "language">Tap/Swipe</h1>
+   <h1 id = "language">Zipfian</h1>
    <p id = "translation">Deutche Flashcards</p>
    <span id="info">Rank : <span id = "rank">0.00%</span> | Probability : <span id = "probability">0.00%</span></span>
+   <p id = "audio"></p>
  </section>
 
 
@@ -4083,7 +4084,10 @@
 		let text = document.querySelector('#translation');
 		let language = document.querySelector('#language');
 		let probability = document.querySelector('#probability');
+		let media = document.querySelector('#audio');
 		let rank = document.querySelector('#rank');
+
+		media.innerHTML = '<iframe src="//commons.wikimedia.org/wiki/File:De-' + dictionary[index].Deutche + '.ogg?embedplayer=yes" width="175" height="20" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
 
 		if(isDeutche){
 		    text.innerText = dictionary[index].English;
