@@ -20,10 +20,24 @@
       }
 
     #translation{
-    	font-size:6vw; 
+    	font-size:10vw;
     	width: 8em; 
     	margin-top:0px; 
     	margin-bottom: 0.5em
+    }
+
+    #language{
+    	font-size:4vw; 
+    	width: 8em; 
+/*    	margin-top:0px; 
+    	margin-bottom: 0.5em*/
+    }
+
+    #info{
+    	font-size:2vw; 
+    	width: 8em; 
+/*    	margin-top:0px; 
+    	margin-bottom: 0.5em*/
     }
 
   </style>
@@ -33,7 +47,7 @@
   <section>
    <h1 id = "language">Zipfian</h1>
    <p id = "translation">Start</p>
-   Rank : <span id = "rank">0.00%</span> | Probability : <span id = "probability">0.00%</span>
+   <span id="info">Rank : <span id = "rank">0.00%</span> | Probability : <span id = "probability">0.00%</span></span>
  </section>
 
 
@@ -117,7 +131,7 @@
 	function startTouch(e) {
 	    initialX = e.touches[0].clientX;
 	    initialY = e.touches[0].clientY;
-	    translate(currentIndex, isDeutche)	
+    	translate(currentIndex, isDeutche)
 	};
 
 	function moveTouch(e) {
