@@ -8,6 +8,7 @@
   <meta content="width=device-width" name="viewport">
   <link href="center" rel="up" title="Centering">
   <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
   <style>
     body { color: black; background: white }
     section {
@@ -24,35 +25,59 @@
     	width: 8em; 
     	margin-top:0px; 
     	margin-bottom: 0.5em
+    	/*margin-left: 0.5em;*/
+    	/*margin-right: 0.5em;*/
     }
 
     #language{
     	font-size:4vw; 
     	width: 8em; 
-/*    	margin-top:0px; 
-    	margin-bottom: 0.5em*/
+    	/*margin-top:0px; */
+    	/*margin-left: 0.5em;*/
+    	/*margin-right: 0.5em;*/
     }
 
     #info{
     	font-size:2vw; 
     	width: 8em; 
+    	/*margin-left: 0.5em;*/
+    	/*margin-right: 0.5em;*/
 /*    	margin-top:0px; 
     	margin-bottom: 0.5em*/
     }
+
+	#topcorner{
+		position:absolute;
+		top:2em;
+		right:2em;
+	}
 
   </style>
  </head>
 
 <body>
+  	<i id="topcorner" class="fas fa-volume-up" onclick="toggleSound()"></i>
   <section>
    <h1 id = "language">Zipfian</h1>
    <p id = "translation">Deutche Flashcards</p>
+<!-- <input onclick="responsiveVoice.speak('This is the text you want to speak', 'Deutsch Female');" type='button' value='🔊 Play' /> -->
+
+<!--    <p  id="info">
+   <h4><span>Usage notes</span></h4>
+<ul><li>Unlike most other conjunctions, <i>aber</i> need not be the first word of a clause: <i>Ich bin dafür, er <b>aber</b> lehnt es ab.</i> — “I’m in favour, <b>but</b> he rejects it.” In such a construction, <i>aber</i> might be considered an adverb, though the usual interpretation is that it is still a conjunction.</li>
+<li>After a negative, <i>sondern</i> is used to express a contrast, while <i>aber</i> expresses a gradation or nuance. Compare:</li></ul>
+<dl><dd><dl><dd><div><i>Er ist nicht genial, <b>sondern</b> dumm.</i> ― He isn’t brilliant <b>but</b> stupid.</div></dd>
+<dd><div><i>Er ist nicht genial, <b>aber</b> ziemlich klug.</i> ― <span>He isn’t brilliant <b>but</b> quite intelligent.</span></div></dd></dl></dd></dl></p> -->
+
    <span id="info">Rank : <span id = "rank">0.00%</span> | Probability : <span id = "probability">0.00%</span></span>
    <p id = "audio"></p>
  </section>
 
+<script src='https://code.responsivevoice.org/responsivevoice.js'></script>
 
   <script>
+
+  	
 
 	var initialX = null;
 	var initialY = null;
@@ -4061,7 +4086,10 @@
   }
 ]
 
+
+
 	// var dictionary = JSON.parse(dictionary);
+	var sound = true;
 	var lastIndex = 0;
 	var dicLength = dictionary.length;
   	var currentIndex = getRandInteger(0, dicLength)
@@ -4080,17 +4108,31 @@
 
 	}
 
+	function toggleSound(){
+		if(sound){
+			document.getElementById("topcorner").classList.add('fa-volume-mute');
+			document.getElementById("topcorner").classList.remove('fa-volume-up');
+			sound = false;
+		} else{
+			document.getElementById("topcorner").classList.add('fa-volume-up');
+			document.getElementById("topcorner").classList.remove('fa-volume-mute');
+			sound = true;
+		}
+
+	}
+
   	function translate(index){
 		let text = document.querySelector('#translation');
 		let language = document.querySelector('#language');
 		let probability = document.querySelector('#probability');
-// 		let media = document.querySelector('#audio');
+		let media = document.querySelector('#audio');
 		let rank = document.querySelector('#rank');
-
-// 		media.innerHTML = '<iframe src="//commons.wikimedia.org/wiki/File:De-' + dictionary[index].Deutche + '.ogg?embedplayer=yes" width="175" height="20" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
 
 		if(isDeutche){
 		    text.innerText = dictionary[index].English;
+		    if(sound){
+    		    responsiveVoice.speak(text.innerText, 'UK English Male');
+    		}
 		    language.innerText = "English";
 
 		    rank.innerText = index;
@@ -4101,6 +4143,9 @@
 		    isDeutche = false;
 		} else{
 		    text.innerText = dictionary[index].Deutche;
+		    if(sound){
+    		    responsiveVoice.speak(text.innerText, 'Deutsch Female');
+    		}
 		    language.innerText = "Deutsche";
 
 		    rank.innerText = index;
@@ -4179,18 +4224,18 @@
     	translate(currentIndex, isDeutche)
     });
 
-    document.addEventListener('onkeypress', (e) => {
-    	// e = e || window.event;
-    	console.log('Key Pressed')
-    	// if (e.keyCode == '37') {
-	    //    currentIndex = lastIndex;
-	    // }
-	    // else if (e.keyCode == '39') {
-	    // 	currentIndex = getRandInteger(0, dicLength)
-	    // 	// translate(currentIndex, isDeutche)
-	    // }
-    	// translate(currentIndex, isDeutche)
-    });
+    // document.addEventListener('onkeypress', (e) => {
+    // 	// e = e || window.event;
+    // 	console.log('Key Pressed')
+    // 	// if (e.keyCode == '37') {
+	   //  //    currentIndex = lastIndex;
+	   //  // }
+	   //  // else if (e.keyCode == '39') {
+	   //  // 	currentIndex = getRandInteger(0, dicLength)
+	   //  // 	// translate(currentIndex, isDeutche)
+	   //  // }
+    // 	// translate(currentIndex, isDeutche)
+    // });
 
 
     document.addEventListener('dblclick', (e) => {
